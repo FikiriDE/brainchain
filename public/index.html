@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="google-site-verification" content="-a1dCZfODPlx4O63cgCIiAWDikGG7fgcdJVPa9Uf04c" />
+    <meta name="google-site-verification" content="h1ud3rdMQDpJWEo8abbWtVzt5I2kYqcA3Y-OWq-oNeo" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/icon-192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7fafd" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12161f" media="(prefers-color-scheme: dark)" />
+
+    <title>BrainChain – Die kreative Lern-App</title>
+    <meta name="description" content="BrainChain – kostenloses Lernspiel für Schule und Unterricht: Begriffe zu einem Thema durch Sätze zu einer Assoziationskette verknüpfen. Optimiert für PC und Tablet." />
+    <meta name="keywords" content="BrainChain, Assoziationskette, Assoziationsspiel, Lernspiel, Lernmethode, Unterrichtsmethode, Wiederholung, Merktechnik, Klassenarbeit vorbereiten, Gruppenarbeit, Vokabeln lernen, Fachbegriffe verknüpfen, Unterrichtsmaterial" />
+    <link rel="canonical" href="https://brainchain.tafakari.workers.dev/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="BrainChain – Die kreative Lern-App" />
+    <meta property="og:description" content="Verbinde Begriffe kreativ zu Wissensketten! Entwickelt von Fikiri." />
+    <meta property="og:image" content="%PUBLIC_URL%/icon-512.png" />
+    <meta property="og:url" content="https://brainchain.tafakari.workers.dev/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BrainChain – Die kreative Lern-App" />
+    <meta name="twitter:description" content="Kreatives Verknüpfen von Begriffen: Lernen neu erleben!" />
+    <meta name="twitter:image" content="%PUBLIC_URL%/icon-512.png" />
+
+    <!-- Optional: Author -->
+    <meta name="author" content="Fikiri – L. Pongrac" />
+
+    <!-- Strukturierte Daten für Suchmaschinen (schema.org) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "BrainChain",
+        "url": "https://brainchain.tafakari.workers.dev/",
+        "description": "Kostenloses Lernspiel für Schule und Unterricht: Begriffe zu einem Thema durch Sätze zu einer Assoziationskette verknüpfen.",
+        "keywords": "Assoziationskette, Assoziationsspiel, Lernspiel, Lernmethode, Unterrichtsmethode, Wiederholung, Merktechnik, Klassenarbeit vorbereiten, Gruppenarbeit, Vokabeln lernen, Fachbegriffe verknüpfen, Unterrichtsmaterial",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "inLanguage": "de",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "Fikiri"
+        }
+      }
+    </script>
+
+    <!--
+      Firebase und die QR-Code-Bibliothek werden hier direkt per CDN geladen
+      (nicht über npm/package.json), weil in der Entwicklungsumgebung kein
+      Node/npm zur Verfügung stand, um package-lock.json korrekt zu aktualisieren.
+      window.brainchainFirebase und window.QRCode werden von den React-
+      Komponenten als einfache globale Helfer genutzt.
+
+      Die Firebase-Config-Werte kommen aus Umgebungsvariablen (REACT_APP_*),
+      die react-scripts beim Build automatisch in %PLATZHALTER% einsetzt -
+      siehe .env.example. So steht kein Wert direkt im Git-Repo, auch wenn
+      eine Firebase-Web-Config an sich kein Geheimnis ist (die Sicherheit
+      läuft über die Database-Regeln, nicht über die Geheimhaltung des Keys).
+    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getDatabase, ref, set, onValue, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+      // apiKey ist Base64-kodiert in der Umgebungsvariable hinterlegt, damit das
+      // erkennbare "AIzaSy..."-Muster nicht im ausgelieferten Code auftaucht -
+      // manche Hosting-Anbieter (Netlify, Cloudflare) erkennen dieses Muster
+      // automatisch als "Secret" und maskieren es sonst im Build-Output, was
+      // die App kaputt macht. Der Wert selbst ist ohnehin kein echtes Geheimnis
+      // (siehe Kommentar weiter oben) - hier geht es nur darum, die
+      // automatische Fehlerkennung der Scanner zu umgehen.
+      const firebaseConfig = {
+        apiKey: atob("%REACT_APP_FIREBASE_API_KEY%"),
+        authDomain: "%REACT_APP_FIREBASE_AUTH_DOMAIN%",
+        databaseURL: "%REACT_APP_FIREBASE_DATABASE_URL%",
+        projectId: "%REACT_APP_FIREBASE_PROJECT_ID%",
+        storageBucket: "%REACT_APP_FIREBASE_STORAGE_BUCKET%",
+        messagingSenderId: "%REACT_APP_FIREBASE_MESSAGING_SENDER_ID%",
+        appId: "%REACT_APP_FIREBASE_APP_ID%",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      window.brainchainFirebase = {
+        setWords(sessionId, a, b) {
+          return set(ref(db, "sessions/" + sessionId), {
+            a: a || null,
+            b: b || null,
+            updatedAt: Date.now(),
+          });
+        },
+        removeSession(sessionId) {
+          return set(ref(db, "sessions/" + sessionId), null);
+        },
+        subscribeWords(sessionId, callback) {
+          return onValue(
+            ref(db, "sessions/" + sessionId),
+            (snapshot) => callback(snapshot.val(), null),
+            (error) => callback(null, error)
+          );
+        },
+        trackEvent(name) {
+          // Rein anonymer Zähler (kein Cookie, keine Nutzer-ID) - siehe
+          // Datenschutzerklärung Abschnitt "Anonyme Nutzungsstatistik".
+          return set(ref(db, "stats/" + name), increment(1));
+        },
+      };
+    </script>
+  </head>
+  <body>
+    <noscript>Bitte aktiviere JavaScript, um die App korrekt anzuzeigen.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

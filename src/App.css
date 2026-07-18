@@ -1,0 +1,690 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/inter-latin-400-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/inter-latin-500-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./fonts/inter-latin-600-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/inter-latin-700-normal.woff2') format('woff2');
+}
+
+:root {
+  --bc-bg: #f7fafd;
+  --bc-card: #fff;
+  --bc-accent: #4f8cff;
+  --bc-accent-light: #e3efff;
+  --bc-success: #2ecc40;
+  --bc-grey: #bfc9d1;
+  --bc-highlight: #e8940c;
+  --bc-highlight-light: #fdecd2;
+  --bc-highlight-text: #7a4a05;
+  --bc-danger: #c0392b;
+  --bc-danger-bg: #fdecea;
+  --bc-danger-border: #f5c6c2;
+  --bc-text: #222;
+  --bc-text-secondary: #444;
+  --bc-text-muted: #666;
+  --bc-text-faint: #9aa3ad;
+  --bc-border: #e6eaf5;
+  --bc-input-bg: #fafdff;
+  --bc-word-bg: #eaf2ff;
+  --bc-word-text: #234;
+  --bc-used-bg: #f0f2f5;
+  --bc-used-border: #dbe2ec;
+  --bc-sentence-bg: #f9faff;
+  --bc-subtle-bg: #f2f4fa;
+  --bc-shadow: rgba(80, 130, 255, 0.12);
+  --bc-accent-hover: #3576e0;
+  --bc-font: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bc-bg: #12161f;
+    --bc-card: #1c222d;
+    --bc-accent: #6ea1ff;
+    --bc-accent-light: #22314d;
+    --bc-success: #3ddc63;
+    --bc-grey: #3a4353;
+    --bc-highlight: #f5b94f;
+    --bc-highlight-light: #3c2f1a;
+    --bc-highlight-text: #f8d38f;
+    --bc-danger: #ff8a80;
+    --bc-danger-bg: #3a2222;
+    --bc-danger-border: #5c2e2a;
+    --bc-text: #eef1f6;
+    --bc-text-secondary: #c3cad6;
+    --bc-text-muted: #93a0b0;
+    --bc-text-faint: #6b7382;
+    --bc-border: #2b3342;
+    --bc-input-bg: #232a36;
+    --bc-word-bg: #22314d;
+    --bc-word-text: #dce6fb;
+    --bc-used-bg: #232a36;
+    --bc-used-border: #333c4a;
+    --bc-sentence-bg: #1e2530;
+    --bc-subtle-bg: #232a36;
+    --bc-shadow: rgba(0, 0, 0, 0.4);
+    --bc-accent-hover: #8bb4ff;
+  }
+}
+
+@keyframes bc-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bc-bg);
+  font-family: var(--bc-font);
+  min-height: 100vh;
+  transition: background 0.2s;
+}
+
+.bc-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  background:
+    radial-gradient(circle at 12% 8%, var(--bc-accent-light) 0%, transparent 42%),
+    radial-gradient(circle at 88% 92%, var(--bc-highlight-light) 0%, transparent 38%),
+    var(--bc-bg);
+}
+
+.bc-logo-mark {
+  display: inline-block;
+  margin-right: 10px;
+  filter: drop-shadow(0 2px 4px var(--bc-shadow));
+}
+
+.bc-checkbox-label {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+}
+.bc-checkbox-label input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--bc-accent);
+  cursor: pointer;
+}
+
+.bc-danger-link {
+  background: none;
+  border: none;
+  color: var(--bc-danger);
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 22px;
+  text-align: center;
+  text-decoration: underline;
+  padding: 4px;
+  border-radius: 6px;
+}
+.bc-danger-link:hover {
+  background: var(--bc-danger-bg);
+}
+
+.bc-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--bc-text-faint);
+  font-size: 0.8rem;
+}
+.bc-footer-link {
+  background: none;
+  border: none;
+  color: var(--bc-text-faint);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 2px;
+}
+.bc-footer-link:hover {
+  color: var(--bc-text-muted);
+}
+
+.bc-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 20px 16px 0 16px;
+  flex-wrap: wrap;
+}
+.bc-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.bc-step-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bc-used-bg);
+  color: var(--bc-text-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
+}
+.bc-step-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bc-text-faint);
+  transition: color 0.2s;
+}
+.bc-step-line {
+  width: 24px;
+  height: 2px;
+  background: var(--bc-used-border);
+  margin: 0 4px;
+}
+.bc-step-done .bc-step-dot,
+.bc-step-current .bc-step-dot {
+  background: var(--bc-accent);
+  color: #fff;
+}
+.bc-step-done .bc-step-label,
+.bc-step-current .bc-step-label {
+  color: var(--bc-text);
+}
+
+.bc-empty-state {
+  text-align: center;
+  color: var(--bc-text-muted);
+  padding: 26px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.bc-empty-icon {
+  font-size: 2rem;
+}
+
+.bc-rate-row {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 4px;
+}
+.bc-rate-btn {
+  background: var(--bc-accent-light);
+  color: var(--bc-accent);
+  font-size: 0.85em;
+}
+.bc-rate-btn:hover {
+  background: var(--bc-accent);
+  color: #fff;
+}
+.bc-rate-btn-complex {
+  background: var(--bc-highlight-light);
+  color: var(--bc-highlight-text);
+}
+.bc-rate-btn-complex:hover {
+  background: var(--bc-highlight);
+  color: #fff;
+}
+.bc-points-badge {
+  background: var(--bc-accent-light);
+  color: var(--bc-accent);
+  border-radius: 999px;
+  padding: 1px 9px;
+  font-size: 0.8em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.bc-points-badge-complex {
+  background: var(--bc-highlight-light);
+  color: var(--bc-highlight-text);
+}
+
+.bc-card {
+  background: var(--bc-card);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px var(--bc-shadow);
+  margin: 40px auto;
+  padding: 32px 32px 24px 32px;
+  max-width: 480px;
+  width: 100%;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  animation: bc-fade-in 0.3s ease-out;
+}
+
+.bc-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--bc-accent);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.bc-subtitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--bc-text);
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.bc-label {
+  margin: 10px 0 0 0;
+  font-weight: 500;
+  color: var(--bc-text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bc-input {
+  padding: 10px 12px;
+  border: 1px solid var(--bc-grey);
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 5px;
+  background: var(--bc-input-bg);
+  color: var(--bc-text);
+  transition: border 0.2s;
+}
+.bc-input:focus {
+  border: 1.5px solid var(--bc-accent);
+  outline: none;
+}
+
+.bc-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+  justify-content: center;
+}
+
+.bc-btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--bc-accent-light);
+  color: var(--bc-accent);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.1s;
+  box-shadow: 0 1px 4px var(--bc-shadow);
+}
+.bc-btn-main {
+  background: var(--bc-accent);
+  color: #fff;
+}
+.bc-btn:disabled,
+.bc-btn[disabled] {
+  background: var(--bc-used-bg);
+  color: var(--bc-text-faint);
+  cursor: not-allowed;
+}
+.bc-btn:not(:disabled):hover,
+.bc-btn-main:not(:disabled):hover {
+  background: var(--bc-accent-hover);
+  color: #fff;
+}
+.bc-btn:not(:disabled):active {
+  transform: scale(0.96);
+}
+.bc-btn-small {
+  padding: 2px 8px;
+  font-size: 1.1em;
+  margin-left: 8px;
+  background: var(--bc-subtle-bg);
+  color: var(--bc-danger);
+  border-radius: 6px;
+  box-shadow: none;
+}
+.bc-btn-small:hover {
+  background: var(--bc-danger-bg);
+}
+.bc-btn-edit {
+  color: var(--bc-accent);
+}
+.bc-btn-edit:hover {
+  background: var(--bc-accent-light);
+}
+.bc-btn-save {
+  color: var(--bc-success);
+}
+.bc-btn-save:hover {
+  background: var(--bc-highlight-light);
+}
+.bc-btn-save:disabled {
+  color: var(--bc-text-faint);
+}
+
+.bc-sentence-edit-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.bc-sentence-edit-input {
+  flex: 1;
+  min-width: 160px;
+  margin-top: 0;
+  padding: 4px 8px;
+}
+
+.bc-word-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.bc-error {
+  color: var(--bc-danger);
+  background: var(--bc-danger-bg);
+  border: 1px solid var(--bc-danger-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.95em;
+  margin-top: -6px;
+  margin-bottom: 10px;
+}
+
+.bc-words-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 14px 0;
+}
+.bc-word-item {
+  background: var(--bc-word-bg);
+  color: var(--bc-word-text);
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bc-board-word-last {
+  border: 2.5px solid var(--bc-highlight) !important;
+  background: var(--bc-highlight-light) !important;
+  color: var(--bc-highlight-text) !important;
+  font-weight: 700;
+}
+
+.bc-hint {
+  color: var(--bc-text-muted);
+  font-size: 0.98em;
+  margin-top: 8px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.bc-progress-wrap {
+  margin: 8px 0 0 0;
+}
+.bc-progress-bar {
+  background: var(--bc-used-bg);
+  border-radius: 999px;
+  height: 8px;
+  overflow: hidden;
+}
+.bc-progress-fill {
+  background: linear-gradient(90deg, var(--bc-accent), var(--bc-highlight));
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.bc-sentence-chain {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.bc-chain-word {
+  background: var(--bc-word-bg);
+  color: var(--bc-word-text);
+  border-radius: 6px;
+  padding: 2px 9px;
+  font-weight: 600;
+  font-size: 0.95em;
+  white-space: nowrap;
+}
+.bc-chain-link {
+  color: var(--bc-highlight);
+  font-size: 0.95em;
+  line-height: 1;
+}
+.bc-chain-link-big {
+  font-size: 2rem;
+}
+.bc-chain-word-big {
+  font-size: 1.6rem;
+  padding: 8px 18px;
+  border-radius: 12px;
+}
+
+.bc-qr-panel {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 38px 0 38px;
+  flex-wrap: wrap;
+}
+.bc-qr-canvas {
+  background: #fff;
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px var(--bc-shadow);
+  display: inline-block;
+  line-height: 0;
+}
+.bc-qr-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bc-watch {
+  align-items: center;
+  text-align: center;
+}
+.bc-watch-pair {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.bc-chain-text {
+  color: var(--bc-text);
+}
+
+.bc-game {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background: var(--bc-bg);
+  animation: bc-fade-in 0.25s ease-out;
+}
+.bc-game-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 38px 10px 38px;
+  background: var(--bc-card);
+  border-bottom: 1px solid var(--bc-border);
+}
+.bc-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 18px;
+  padding: 38px;
+  justify-items: center;
+  align-items: center;
+  flex: 1 1 auto;
+  min-height: 180px;
+  background: var(--bc-bg);
+}
+.bc-board-word {
+  background: var(--bc-card);
+  border: 2px solid var(--bc-border);
+  border-radius: 12px;
+  padding: 18px 0;
+  font-size: 1.13rem;
+  min-width: 100px;
+  min-height: 38px;
+  text-align: center;
+  color: var(--bc-word-text);
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+  box-shadow: 0 2px 10px var(--bc-shadow);
+  user-select: none;
+}
+.bc-board-word:hover:not(.bc-board-word-used) {
+  transform: translateY(-2px);
+}
+.bc-board-word:focus-visible {
+  outline: 2.5px solid var(--bc-accent);
+  outline-offset: 2px;
+}
+.bc-board-word-selected {
+  background: var(--bc-accent-light);
+  border: 2.5px solid var(--bc-accent);
+  color: var(--bc-accent);
+  font-weight: 700;
+  transform: scale(1.04);
+}
+.bc-board-word-used {
+  background: var(--bc-used-bg);
+  color: var(--bc-text-faint);
+  border: 2px dashed var(--bc-used-border);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.bc-game-main {
+  padding: 0 38px 38px 38px;
+  background: var(--bc-bg);
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.bc-sentence-row {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.bc-sentence-list {
+  margin-top: 20px;
+  background: var(--bc-sentence-bg);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 1.07em;
+  min-height: 60px;
+  max-height: 180px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--bc-accent) var(--bc-used-bg);
+}
+.bc-sentence-list::-webkit-scrollbar {
+  width: 8px;
+}
+.bc-sentence-list::-webkit-scrollbar-track {
+  background: var(--bc-used-bg);
+  border-radius: 8px;
+}
+.bc-sentence-list::-webkit-scrollbar-thumb {
+  background: var(--bc-accent);
+  border-radius: 8px;
+}
+.bc-sentence-list li {
+  margin-bottom: 6px;
+}
+
+.bc-success {
+  color: var(--bc-success);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+@media (max-width: 650px) {
+  .bc-card, .bc-game-header, .bc-game-main {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .bc-board {
+    padding: 14px;
+    gap: 10px;
+  }
+  .bc-board-word {
+    min-width: 60px;
+    padding: 10px 0;
+    font-size: 0.98rem;
+  }
+}
+
+/* Tablet und Desktop bekommen mehr Breite und Luft, da hier - anders als auf
+   dem Smartphone - genug Platz ist, um viele Begriffe gleichzeitig gut lesbar
+   darzustellen. */
+@media (min-width: 700px) {
+  .bc-card {
+    max-width: 560px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .bc-board {
+    gap: 24px;
+    padding: 48px;
+  }
+  .bc-board-word {
+    min-height: 44px;
+    padding: 22px 0;
+  }
+}
