@@ -61,7 +61,7 @@ function InfoPage({ onBack }) {
       <hr style={{ margin: "24px 0" }} />
       <h3 style={{ marginBottom: 8 }}>Entwicklung & Kontakt</h3>
       <p>
-        <b>Entwicklung:</b> Fikiri<br />
+        <b>Entwicklung:</b> Fikiri (<a href="https://fikiri.de" target="_blank" rel="noopener noreferrer">fikiri.de</a>)<br />
         <b>Kontakt:</b> <a href="mailto:fikiri.info@icloud.com">fikiri.info@icloud.com</a><br />
         <b>App-Version:</b> 2.0
       </p>
