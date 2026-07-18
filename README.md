@@ -4,7 +4,7 @@ Eine kreative Lern-App, die assoziatives Denken fördert: Begriffe zu einem
 Thema werden Schritt für Schritt durch selbst formulierte Sätze zu einer
 "Begriffskette" verknüpft. Optimiert für PC und Tablet.
 
-Live: https://brainchain.tafakari.workers.dev/
+Live: https://brainchain.lars-pongrac.workers.dev/
 
 ## Funktionsumfang
 
@@ -47,6 +47,6 @@ npm run build   # Produktions-Build nach ./build
 
 ## Deployment
 
-Die App wird automatisch über Netlify aus dem `main`-Branch gebaut und
-deployed. Die Firebase-Umgebungsvariablen sind dafür unter Netlify →
-Site configuration → Environment variables hinterlegt.
+Die App wird automatisch über Cloudflare Pages aus dem `main`-Branch
+gebaut und deployed. Die Firebase-Umgebungsvariablen sind dafür im
+Cloudflare-Projekt unter Settings → Environment variables hinterlegt.
