@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://brainchain.tafakari.workers.dev/sitemap.xml
+Sitemap: https://brainchain.lars-pongrac.workers.dev/sitemap.xml
