@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://brainchain.lars-pongrac.workers.dev/sitemap.xml
+Sitemap: https://brainchain.fikiri.de/sitemap.xml
